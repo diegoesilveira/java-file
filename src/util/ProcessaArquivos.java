@@ -23,7 +23,6 @@ public class ProcessaArquivos {
 
 			if (!file.canWrite() || !file.canRead() || !file.isFile()) {
 				try {
-					System.out.println("Entrou na condição erro");
 					temp = Files.move(Paths.get(ORIGEM + file.getName()), Paths.get(ERRO + "erro" + file.getName()));
 				} catch (IOException e) {
 					e.getMessage();
