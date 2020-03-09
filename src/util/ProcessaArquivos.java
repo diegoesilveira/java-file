@@ -21,18 +21,19 @@ public class ProcessaArquivos {
 
 		for (File file : files.listFiles()) {
 
-			if (!((files.exists()) || (files.canRead() || files.isFile()) || files.canWrite())) {
+			if (!file.canWrite() || !file.canRead() || !file.isFile()) {
 				try {
+					System.out.println("Entrou na condição erro");
 					temp = Files.move(Paths.get(ORIGEM + file.getName()), Paths.get(ERRO + "erro" + file.getName()));
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					e.getMessage();
 				}
-			}
 
+			}
 			moveArquivo(file.getName());
 
 		}
+
 	}
 
 	private void moveArquivo(String nomeArquivo) {
