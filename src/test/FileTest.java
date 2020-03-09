@@ -6,45 +6,49 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import exception.ErrorFileException;
+
 public class FileTest {
 
-	final String ORIGEM = "C:\\Users\\diego.silveira\\Documents\\origem\\";
-	final String DESTINO = "C:\\Users\\diego.silveira\\Documents\\destino\\";
-
-	String nomeArquivo = "1234567890.txt";
-	String nomeAlterado = "1234567890VALIDADO.txt";
-
-	File file = new File(ORIGEM + nomeArquivo);
+	final String ORIGEM = "C:\\Users\\diego.silveira\\Documents\\EDI\\origem\\";
+	final String DESTINO = "C:\\Users\\diego.silveira\\Documents\\EDI\\destino\\";
+	final String ERRO = "C:\\Users\\diego.silveira\\Documents\\EDI\\origem\\";
+	
+	File files = new File(ORIGEM);
 
 	public void validacaoArquivo() {
 
-		try {
-			file.createNewFile();
-			if (!((file.exists()) || (file.canRead() || file.isFile()) || file.canWrite())) {
-				System.out.println("Erro!");
-
-			}
-			moveArquivo();
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (!((files.exists()) || (files.canRead() || files.isFile()) || files.canWrite())) {
+			new ErrorFileException("Erro ao tentar manipular arquivo");
 		}
 	}
 
-	public void moveArquivo() {
+	public void listaArquivos() {
+
+		for (File file : files.listFiles()) {
+			if (file.exists()) {
+
+				moveArquivo(file.getName());
+			} else {
+				System.out.println("Erro");
+			}
+
+		}
+	}
+
+	private void moveArquivo(String nomeArquivo) {
 
 		Path temp;
 		try {
-			temp = Files.move(Paths.get(ORIGEM + nomeArquivo), Paths.get(DESTINO + nomeAlterado));
+			temp = Files.move(Paths.get(ORIGEM + nomeArquivo), Paths.get(DESTINO + "ok" + nomeArquivo));
 
 			if (temp != null) {
 				System.out.println("Arquivo renomeado e movido com sucesso!");
 			} else {
-				System.out.println("Falha ao mover arquivo!");
+				new ErrorFileException("Falha ao mover arquivo");
 			}
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
+			e.getMessage();
 
 		}
 	}

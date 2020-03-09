@@ -6,9 +6,9 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		FileTest arq = new FileTest();
+		FileTest file = new FileTest();
 		
-		arq.validacaoArquivo();
+		file.listaArquivos();
 	}
 
 }
