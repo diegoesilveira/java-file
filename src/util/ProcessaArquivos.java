@@ -12,24 +12,31 @@ public class ProcessaArquivos {
 
 	final String ORIGEM = "C:\\Users\\diego.silveira\\Documents\\EDI\\origem\\";
 	final String DESTINO = "C:\\Users\\diego.silveira\\Documents\\EDI\\destino\\";
-	final String ERRO = "C:\\Users\\diego.silveira\\Documents\\EDI\\origem\\";
+	final String ERRO = "C:\\Users\\diego.silveira\\Documents\\EDI\\erro\\";
 
 	File files = new File(ORIGEM);
+	Path temp;
 
 	public void validacaoArquivo() {
 
-		if (!((files.exists()) || (files.canRead() || files.isFile()) || files.canWrite())) {
-			
-			new ErrorFileException("Erro ao tentar manipular arquivo");
-		}
 		for (File file : files.listFiles()) {
+
+			if (!((files.exists()) || (files.canRead() || files.isFile()) || files.canWrite())) {
+				try {
+					temp = Files.move(Paths.get(ORIGEM + file.getName()), Paths.get(ERRO + "erro" + file.getName()));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
 			moveArquivo(file.getName());
+
 		}
 	}
-	
+
 	private void moveArquivo(String nomeArquivo) {
 
-		Path temp;
 		try {
 			temp = Files.move(Paths.get(ORIGEM + nomeArquivo), Paths.get(DESTINO + "ok" + nomeArquivo));
 
