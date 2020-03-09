@@ -1,14 +1,14 @@
 package program;
 
-import test.FileTest;
+import util.ProcessaArquivos;
 
 public class Main {
 	
 	public static void main(String[] args) {
 		
-		FileTest file = new FileTest();
+		ProcessaArquivos file = new ProcessaArquivos();
 		
-		file.listaArquivos();
+		file.validacaoArquivo();
 	}
 
 }

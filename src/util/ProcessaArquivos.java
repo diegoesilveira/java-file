@@ -1,4 +1,4 @@
-package test;
+package util;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,34 +8,25 @@ import java.nio.file.Paths;
 
 import exception.ErrorFileException;
 
-public class FileTest {
+public class ProcessaArquivos {
 
 	final String ORIGEM = "C:\\Users\\diego.silveira\\Documents\\EDI\\origem\\";
 	final String DESTINO = "C:\\Users\\diego.silveira\\Documents\\EDI\\destino\\";
 	final String ERRO = "C:\\Users\\diego.silveira\\Documents\\EDI\\origem\\";
-	
+
 	File files = new File(ORIGEM);
 
 	public void validacaoArquivo() {
 
 		if (!((files.exists()) || (files.canRead() || files.isFile()) || files.canWrite())) {
+			
 			new ErrorFileException("Erro ao tentar manipular arquivo");
 		}
-	}
-
-	public void listaArquivos() {
-
 		for (File file : files.listFiles()) {
-			if (file.exists()) {
-
-				moveArquivo(file.getName());
-			} else {
-				System.out.println("Erro");
-			}
-
+			moveArquivo(file.getName());
 		}
 	}
-
+	
 	private void moveArquivo(String nomeArquivo) {
 
 		Path temp;
